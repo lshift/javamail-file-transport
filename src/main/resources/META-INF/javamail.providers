@@ -1,0 +1,1 @@
+protocol=file; type=transport; class=net.lshift.javamail.FileOutputTransport; vendor=LShift Ltd.;
