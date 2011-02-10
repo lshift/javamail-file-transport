@@ -4,7 +4,7 @@
 
   <groupId>net.lshift.javamail</groupId>
   <artifactId>javamail-file-transport</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
 
   <name>JavaMail File Transport</name>
 
