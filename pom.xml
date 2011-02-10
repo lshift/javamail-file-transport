@@ -5,8 +5,37 @@
 
   <groupId>net.lshift.javamail</groupId>
   <artifactId>javamail-file-transport</artifactId>
-  <version>0.8-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
+
   <name>JavaMail File Transport</name>
+
+  <description>The JavaMail File Transport allows you to send mail using a "file" protocol, which will instead write the data out to a text file in a directory you specify, which can then be read and examined.</description>
+
+  <url>http://github.com/lshift/javamail-file-transport</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/lshift/javamail-file-transport</url>
+    <connection>scm:git:git://github.com/lshift/javamail-file-transport.git</connection>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>paulj</id>
+      <name>Paul Jones</name>
+    </developer>
+    <developer>
+      <id>0x6e6562</id>
+      <name>Ben Hood</name>
+    </developer>
+  </developers>
 
   <packaging>jar</packaging>
 
@@ -57,6 +86,50 @@
           <forkMode>never</forkMode>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
+      </plugin>
+
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
