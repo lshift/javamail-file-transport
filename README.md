@@ -59,6 +59,79 @@ with configuration such as:
 		</Arg>
 	  </New>
 
+Usage With Maven Jetty Plugin
+-----------------------------
+
+The following fragment shows how the transport is configured with the Maven Jetty plugin:
+
+  <plugin>
+     <groupId>org.mortbay.jetty</groupId>
+     <artifactId>jetty-maven-plugin</artifactId>
+        <dependencies>
+
+          <!-- OTHER DEPENDENCIES THAT SHOULD GO INTO JETTY'S LOAD PATH -->          
+
+          <dependency>
+            <groupId>net.lshift.javamail</groupId>
+            <artifactId>javamail-file-transport</artifactId>
+            <version>1.0</version>
+          </dependency>
+
+        </dependencies>
+
+        <configuration>
+          <systemProperties>
+            <systemProperty>
+              <name>JETTY_NO_SHUTDOWN_HOOK</name>
+              <value>true</value>
+            </systemProperty>
+            <systemProperty>
+              <name>basedir</name>
+              <value>${basedir}</value>
+            </systemProperty>
+            <systemProperty>
+              <name>diffa.maildir</name>
+              <value>${basedir}/target/messages</value>
+            </systemProperty>
+          </systemProperties>
+          <connectors>
+            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+              <port>19093</port>
+              <maxIdleTime>60000</maxIdleTime>
+            </connector>
+          </connectors>
+          <scanIntervalSeconds>600</scanIntervalSeconds>
+          <stopKey>foo</stopKey>
+          <stopPort>19094</stopPort>
+          <jettyConfig>${basedir}/src/test/conf/jetty.xml</jettyConfig>
+          <webAppXml>${basedir}/src/test/conf/jetty-env.xml</webAppXml>
+          <webAppConfig>
+            <contextPath>/some-context-path</contextPath>
+          </webAppConfig>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-jetty</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <scanIntervalSeconds>0</scanIntervalSeconds>
+              <daemon>true</daemon>
+            </configuration>
+          </execution>
+          <execution>
+            <id>stop-jetty</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+   </plugin>
+
+
 License
 -------
 
